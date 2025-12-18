@@ -10,6 +10,7 @@ import { connectDB } from './utils/database';
 import { errorHandler } from './middleware/errorHandler';
 import { authenticate } from './middleware/auth';
 import { logger } from './utils/logger';
+import { seedDatabase } from './utils/seedData';
 import authRoutes from './routes/auth';
 import userRoutes from './routes/user';
 import matchingRoutes from './routes/matching';
@@ -97,9 +98,18 @@ const PORT = process.env.PORT || 3001;
 const startServer = async () => {
   try {
     await connectDB();
+
+    // Seed database with mock data in development
+    if (process.env.NODE_ENV !== 'production') {
+      await seedDatabase();
+    }
+
     server.listen(PORT, () => {
       logger.info(`🚀 Server running on port ${PORT}`);
       logger.info(`📡 Socket.io server initialized`);
+      if (process.env.NODE_ENV !== 'production') {
+        logger.info(`🌱 Mock data seeded successfully`);
+      }
     });
   } catch (error) {
     logger.error('Failed to start server:', error);

@@ -19,13 +19,13 @@ export const seedDatabase = async (): Promise<void> => {
 
     // Create admin user
     const admin = new User({
-      email: 'admin@aceib.com',
-      password: 'admin123', // Will be hashed by pre-save hook
-      firstName: 'System',
+      email: 'admin@aceib-platform.demo',
+      password: 'DemoAdmin2024!', // Will be hashed by pre-save hook
+      firstName: 'Demo',
       lastName: 'Administrator',
       role: 'admin',
       profile: {
-        bio: 'Platform administrator managing the ACEIB educational ecosystem.',
+        bio: 'Platform administrator for demonstration purposes.',
         languages: ['English']
       },
       isActive: true,
@@ -36,25 +36,25 @@ export const seedDatabase = async (): Promise<void> => {
     // Create mentor users
     const mentors = await Promise.all([
       new User({
-        email: 'sarah.johnson@aceib.com',
-        password: 'mentor123',
-        firstName: 'Sarah',
-        lastName: 'Johnson',
+        email: 'mentor.demo1@aceib-platform.demo',
+        password: 'DemoMentor2024!',
+        firstName: 'Dr.',
+        lastName: 'Smith',
         role: 'mentor',
         profile: {
-          avatar: 'https://randomuser.me/api/portraits/women/1.jpg',
-          bio: 'Experienced math and science tutor with 8 years of teaching experience.',
-          location: 'New York, NY',
+          avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+          bio: 'Experienced STEM educator with a passion for making complex concepts accessible.',
+          location: 'Demo City, DC',
           timezone: 'America/New_York',
-          languages: ['English', 'Spanish']
+          languages: ['English']
         },
         mentorProfile: {
-          expertise: ['Mathematics', 'Physics', 'Chemistry'],
+          expertise: ['Mathematics', 'Physics', 'General Science'],
           teachingStyle: 'structured',
           experienceYears: 8,
           availability: ['monday-2pm', 'wednesday-2pm', 'friday-10am', 'saturday-9am'],
           maxStudents: 4,
-          certifications: ['Certified Math Teacher', 'Physics Education Degree'],
+          certifications: ['Teaching Certificate', 'STEM Education Specialist'],
           hourlyRate: 45
         },
         engagement: {
@@ -68,26 +68,26 @@ export const seedDatabase = async (): Promise<void> => {
         isVerified: true
       }),
       new User({
-        email: 'michael.chen@aceib.com',
-        password: 'mentor123',
-        firstName: 'Michael',
-        lastName: 'Chen',
+        email: 'mentor.demo2@aceib-platform.demo',
+        password: 'DemoMentor2024!',
+        firstName: 'Prof.',
+        lastName: 'Garcia',
         role: 'mentor',
         profile: {
-          avatar: 'https://randomuser.me/api/portraits/men/2.jpg',
-          bio: 'Computer science professor passionate about coding education.',
-          location: 'San Francisco, CA',
+          avatar: 'https://randomuser.me/api/portraits/men/45.jpg',
+          bio: 'Technology educator focused on practical programming skills and problem-solving.',
+          location: 'Demo Valley, CA',
           timezone: 'America/Los_Angeles',
-          languages: ['English', 'Mandarin']
+          languages: ['English', 'Spanish']
         },
         mentorProfile: {
-          expertise: ['Computer Science', 'Python', 'JavaScript', 'Web Development'],
+          expertise: ['Computer Science', 'Programming', 'Web Development'],
           teachingStyle: 'project-based',
-          experienceYears: 12,
+          experienceYears: 10,
           availability: ['tuesday-3pm', 'thursday-3pm', 'sunday-2pm'],
           maxStudents: 3,
-          certifications: ['PhD Computer Science', 'AWS Certified'],
-          hourlyRate: 60
+          certifications: ['Computer Science Education', 'Full Stack Development'],
+          hourlyRate: 55
         },
         engagement: {
           currentStreak: 8,
@@ -100,25 +100,25 @@ export const seedDatabase = async (): Promise<void> => {
         isVerified: true
       }),
       new User({
-        email: 'emily.rodriguez@aceib.com',
-        password: 'mentor123',
-        firstName: 'Emily',
-        lastName: 'Rodriguez',
+        email: 'mentor.demo3@aceib-platform.demo',
+        password: 'DemoMentor2024!',
+        firstName: 'Ms.',
+        lastName: 'Johnson',
         role: 'mentor',
         profile: {
-          avatar: 'https://randomuser.me/api/portraits/women/3.jpg',
-          bio: 'Literature and writing mentor helping students discover their voice.',
-          location: 'Austin, TX',
+          avatar: 'https://randomuser.me/api/portraits/women/46.jpg',
+          bio: 'Language arts specialist dedicated to developing strong communication skills.',
+          location: 'Demo Town, TX',
           timezone: 'America/Chicago',
-          languages: ['English', 'French']
+          languages: ['English']
         },
         mentorProfile: {
-          expertise: ['English Literature', 'Creative Writing', 'Essay Writing', 'Public Speaking'],
+          expertise: ['English', 'Writing', 'Literature', 'Communication'],
           teachingStyle: 'interactive',
           experienceYears: 6,
           availability: ['monday-4pm', 'wednesday-4pm', 'saturday-11am'],
           maxStudents: 5,
-          certifications: ['MFA Creative Writing', 'Teaching Certificate'],
+          certifications: ['English Education', 'Writing Instruction'],
           hourlyRate: 40
         },
         engagement: {
@@ -136,15 +136,15 @@ export const seedDatabase = async (): Promise<void> => {
     // Create student users
     const students = await Promise.all([
       new User({
-        email: 'alex.thompson@aceib.com',
-        password: 'student123',
-        firstName: 'Alex',
-        lastName: 'Thompson',
+        email: 'student.demo1@aceib-platform.demo',
+        password: 'DemoStudent2024!',
+        firstName: 'Jamie',
+        lastName: 'Demo',
         role: 'student',
         profile: {
-          avatar: 'https://randomuser.me/api/portraits/men/4.jpg',
-          bio: 'High school senior preparing for college applications and interested in STEM.',
-          location: 'Boston, MA',
+          avatar: 'https://randomuser.me/api/portraits/men/47.jpg',
+          bio: 'High school student passionate about STEM subjects and future engineering.',
+          location: 'Demo City, DC',
           timezone: 'America/New_York',
           languages: ['English']
         },
@@ -153,7 +153,7 @@ export const seedDatabase = async (): Promise<void> => {
           subjects: ['Mathematics', 'Physics', 'Computer Science'],
           learningStyle: 'visual',
           availability: ['monday-3pm', 'tuesday-3pm', 'thursday-3pm', 'saturday-10am'],
-          goals: ['Improve math grades', 'Learn programming', 'College preparation'],
+          goals: ['Improve calculus skills', 'Learn programming basics', 'College preparation'],
           preferredMentorExperience: 'intermediate'
         },
         engagement: {
@@ -166,24 +166,24 @@ export const seedDatabase = async (): Promise<void> => {
         isVerified: true
       }),
       new User({
-        email: 'maya.patel@aceib.com',
-        password: 'student123',
-        firstName: 'Maya',
-        lastName: 'Patel',
+        email: 'student.demo2@aceib-platform.demo',
+        password: 'DemoStudent2024!',
+        firstName: 'Taylor',
+        lastName: 'Sample',
         role: 'student',
         profile: {
-          avatar: 'https://randomuser.me/api/portraits/women/5.jpg',
-          bio: 'College freshman majoring in biology, seeking help with organic chemistry.',
-          location: 'Chicago, IL',
-          timezone: 'America/Chicago',
-          languages: ['English', 'Hindi']
+          avatar: 'https://randomuser.me/api/portraits/women/48.jpg',
+          bio: 'College student studying science with a focus on laboratory research.',
+          location: 'Demo Valley, CA',
+          timezone: 'America/Los_Angeles',
+          languages: ['English']
         },
         studentProfile: {
           gradeLevel: 'college',
           subjects: ['Chemistry', 'Biology', 'Mathematics'],
           learningStyle: 'kinesthetic',
           availability: ['tuesday-2pm', 'wednesday-2pm', 'friday-1pm', 'sunday-3pm'],
-          goals: ['Master organic chemistry', 'Improve study techniques', 'Research opportunities'],
+          goals: ['Master laboratory techniques', 'Improve research skills', 'Academic excellence'],
           preferredMentorExperience: 'advanced'
         },
         engagement: {
@@ -196,24 +196,24 @@ export const seedDatabase = async (): Promise<void> => {
         isVerified: true
       }),
       new User({
-        email: 'jordan.williams@aceib.com',
-        password: 'student123',
-        firstName: 'Jordan',
-        lastName: 'Williams',
+        email: 'student.demo3@aceib-platform.demo',
+        password: 'DemoStudent2024!',
+        firstName: 'Morgan',
+        lastName: 'Test',
         role: 'student',
         profile: {
-          avatar: 'https://randomuser.me/api/portraits/men/6.jpg',
-          bio: 'Middle school student who loves science and wants to become an engineer.',
-          location: 'Seattle, WA',
-          timezone: 'America/Los_Angeles',
+          avatar: 'https://randomuser.me/api/portraits/men/49.jpg',
+          bio: 'Middle school student with a curiosity for science and technology.',
+          location: 'Demo Town, TX',
+          timezone: 'America/Chicago',
           languages: ['English']
         },
         studentProfile: {
           gradeLevel: 'middle-school',
-          subjects: ['Science', 'Mathematics', 'Computer Science'],
+          subjects: ['Science', 'Mathematics', 'Technology'],
           learningStyle: 'auditory',
           availability: ['monday-4pm', 'tuesday-4pm', 'thursday-4pm', 'saturday-11am'],
-          goals: ['Learn coding basics', 'Science fair project', 'Math competition prep'],
+          goals: ['Learn basic programming', 'Science experiments', 'STEM exploration'],
           preferredMentorExperience: 'beginner'
         },
         engagement: {

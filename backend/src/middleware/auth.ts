@@ -88,3 +88,28 @@ export const authorize = (...roles: string[]) => {
     next();
   };
 };
+
+// Middleware to check if user owns the resource or is admin
+export const authorizeOwner = (paramName: string = 'id') => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        error: 'Not authorized to access this route'
+      });
+    }
+
+    const resourceId = req.params[paramName];
+    const userId = req.user.userId;
+    const isAdmin = req.user.role === 'admin';
+
+    if (resourceId !== userId && !isAdmin) {
+      return res.status(403).json({
+        success: false,
+        error: 'Access denied: insufficient permissions'
+      });
+    }
+
+    next();
+  };
+};

@@ -63,7 +63,13 @@ The platform follows a client-server architecture:
    npm run install:all
    ```
 
-3. **Start development environment**
+3. **Configure environment**
+   ```bash
+   cp backend/env.example backend/.env
+   # Edit backend/.env with your configuration (see SECURITY.md)
+   ```
+
+4. **Start development environment**
    ```bash
    npm run dev
    ```
@@ -72,6 +78,16 @@ The platform follows a client-server architecture:
    - Backend API on `http://localhost:3001`
    - Frontend on `http://localhost:3000`
    - MongoDB on `localhost:27017`
+
+### Demo Data
+
+The application includes secure demo data for testing:
+- **Demo users** with fictional information and secure passwords
+- **Sample pairings** and chat conversations
+- **Mediation tickets** for testing conflict resolution
+- All data uses demo domains (`@aceib-platform.demo`) and fictional names
+
+**Security Note**: Demo credentials are only available in development mode and are never exposed in production.
 
 ### Alternative: Run services individually
 
@@ -156,6 +172,17 @@ Gamification features:
 npm test
 ```
 
+## 🔒 Security
+
+This platform implements comprehensive security measures:
+
+- **Data Protection**: Input sanitization, XSS prevention, NoSQL injection protection
+- **Authentication**: JWT-based secure authentication with role-based access control
+- **API Security**: Rate limiting, CORS policies, security headers
+- **Privacy**: Minimal data exposure, proper authorization checks
+
+For detailed security information, see [SECURITY.md](SECURITY.md).
+
 ## 🚢 Deployment
 
 ### Production Build
@@ -170,6 +197,14 @@ npm start
 ```bash
 docker-compose -f docker-compose.prod.yml up -d
 ```
+
+### Security Checklist for Production
+- [ ] Set strong JWT secrets (minimum 32 characters)
+- [ ] Configure HTTPS with valid SSL certificates
+- [ ] Set secure MongoDB credentials
+- [ ] Enable production logging
+- [ ] Configure firewall rules
+- [ ] Set up monitoring and alerts
 
 ## 🤝 Contributing
 

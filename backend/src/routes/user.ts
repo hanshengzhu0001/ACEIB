@@ -19,7 +19,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     if (isActive !== undefined) query.isActive = isActive;
 
     const users = await User.find(query)
-      .select('-password')
+      .select('-password -engagement -studentProfile -mentorProfile')
       .sort({ createdAt: -1 })
       .limit(limit * 1)
       .skip((page - 1) * limit)
@@ -59,9 +59,38 @@ router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
       });
     }
 
+    // Users can only view basic info of other users, not sensitive data
+    const currentUserId = (req as any).user.userId;
+    const isOwnProfile = currentUserId === req.params.id;
+    const isAdmin = (req as any).user.role === 'admin';
+
+    let userData;
+    if (isOwnProfile || isAdmin) {
+      // Return full profile for own profile or admin
+      userData = user;
+    } else {
+      // Return limited profile for other users
+      userData = {
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        role: user.role,
+        profile: {
+          avatar: user.profile.avatar,
+          bio: user.profile.bio,
+          location: user.profile.location,
+          languages: user.profile.languages
+        },
+        engagement: {
+          averageRating: user.engagement.averageRating,
+          totalSessions: user.engagement.totalSessions
+        }
+      };
+    }
+
     res.json({
       success: true,
-      data: { user }
+      data: { user: userData }
     });
   } catch (error) {
     next(error);

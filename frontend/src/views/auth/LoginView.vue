@@ -69,24 +69,15 @@
           </v-card-text>
         </v-card>
 
-        <!-- Demo Credentials -->
-        <v-card class="mt-6 pa-4" outlined>
-          <v-card-title class="text-h6 mb-2">Demo Credentials</v-card-title>
+        <!-- Development Info (only in development) -->
+        <v-card v-if="import.meta.env.DEV" class="mt-6 pa-4" outlined>
+          <v-card-title class="text-h6 mb-2">Development Mode</v-card-title>
           <v-card-text class="pa-0">
-            <div class="mb-3">
-              <strong>Student:</strong><br>
-              Email: alex.thompson@aceib.com<br>
-              Password: student123
+            <div class="text-caption text--secondary mb-2">
+              Demo accounts are available for testing purposes only.
             </div>
-            <div class="mb-3">
-              <strong>Mentor:</strong><br>
-              Email: sarah.johnson@aceib.com<br>
-              Password: mentor123
-            </div>
-            <div>
-              <strong>Admin:</strong><br>
-              Email: admin@aceib.com<br>
-              Password: admin123
+            <div class="text-caption">
+              Contact your administrator for login credentials.
             </div>
           </v-card-text>
         </v-card>

@@ -57,9 +57,24 @@ router.post('/generate', async (req: Request, res: Response, next: NextFunction)
             id: mentor._id,
             firstName: mentor.firstName,
             lastName: mentor.lastName,
-            profile: mentor.profile,
-            mentorProfile: mentor.mentorProfile,
-            engagement: mentor.engagement
+            profile: {
+              avatar: mentor.profile.avatar,
+              bio: mentor.profile.bio,
+              location: mentor.profile.location,
+              languages: mentor.profile.languages
+            },
+            mentorProfile: {
+              expertise: mentor.mentorProfile.expertise,
+              teachingStyle: mentor.mentorProfile.teachingStyle,
+              experienceYears: mentor.mentorProfile.experienceYears,
+              maxStudents: mentor.mentorProfile.maxStudents,
+              certifications: mentor.mentorProfile.certifications,
+              hourlyRate: mentor.mentorProfile.hourlyRate
+            },
+            engagement: {
+              averageRating: mentor.engagement.averageRating,
+              totalSessions: mentor.engagement.totalSessions
+            }
           },
           compatibilityScore: score.compatibilityScore,
           matchingCriteria: score.criteria

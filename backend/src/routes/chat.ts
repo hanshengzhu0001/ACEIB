@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import Chat from '../models/Chat';
 import MentorStudentPairing from '../models/MentorStudentPairing';
 import { logger } from '../utils/logger';
+import { authorize } from '../middleware/auth';
 
 const router = express.Router();
 

@@ -1,0 +1,33 @@
+{
+  "name": "aceib-educational-platform",
+  "version": "1.0.0",
+  "description": "ACEIB Educational Platform - Centralized automated web platform for student admission and mentor matching",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "docker-compose up --build",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "docker-compose build",
+    "start": "docker-compose up",
+    "stop": "docker-compose down",
+    "test": "cd backend && npm test && cd ../frontend && npm test",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  },
+  "keywords": [
+    "education",
+    "platform",
+    "mentoring",
+    "matching",
+    "real-time",
+    "chat"
+  ],
+  "author": "ACEIB Team",
+  "license": "MIT"
+}

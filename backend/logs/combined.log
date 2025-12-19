@@ -41,3 +41,5 @@
 {"level":"info","message":"🌱 Mock data seeded successfully","timestamp":"2025-12-19T05:29:00.406Z"}
 {"level":"info","message":"User logged in: student.demo1@aceib-platform.demo","timestamp":"2025-12-19T05:30:56.459Z"}
 {"level":"info","message":"User logged in: student.demo1@aceib-platform.demo","timestamp":"2025-12-19T05:31:02.761Z"}
+{"level":"info","message":"User logged in: student.demo1@aceib-platform.demo","timestamp":"2025-12-19T05:33:35.789Z"}
+{"level":"info","message":"Generated 2 matches for student: student.demo1@aceib-platform.demo","timestamp":"2025-12-19T05:33:40.300Z"}

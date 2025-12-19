@@ -117,25 +117,31 @@
                     </div>
                   </div>
 
-                  <div class="d-flex gap-2">
-                    <v-btn
-                      color="primary"
-                      outlined
-                      block
-                      @click="scheduleSession(pairing)"
-                    >
-                      <v-icon left>mdi-calendar-plus</v-icon>
-                      Schedule
-                    </v-btn>
-                    <v-btn
-                      color="success"
-                      block
-                      @click="markSessionComplete(pairing)"
-                    >
-                      <v-icon left>mdi-check-circle</v-icon>
-                      Complete Session
-                    </v-btn>
-                  </div>
+                  <v-row dense class="mt-2">
+                    <v-col cols="6">
+                      <v-btn
+                        color="primary"
+                        outlined
+                        block
+                        small
+                        @click="scheduleSession(pairing)"
+                      >
+                        <v-icon left size="16">mdi-calendar-plus</v-icon>
+                        Schedule
+                      </v-btn>
+                    </v-col>
+                    <v-col cols="6">
+                      <v-btn
+                        color="success"
+                        block
+                        small
+                        @click="markSessionComplete(pairing)"
+                      >
+                        <v-icon left size="16">mdi-check-circle</v-icon>
+                        Complete
+                      </v-btn>
+                    </v-col>
+                  </v-row>
                 </v-card-text>
               </v-card>
             </v-col>

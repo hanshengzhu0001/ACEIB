@@ -13,29 +13,28 @@
               size="large"
               @click="runMatching"
               :loading="loading"
-              :disabled="hasActivePairing"
             >
               <v-icon left>mdi-magnify</v-icon>
               Find Matches
             </v-btn>
           </v-card-title>
 
-          <v-card-text v-if="hasActivePairing" class="warning lighten-5">
-            <v-alert type="warning" outlined class="mb-0">
-              <v-icon left>mdi-alert-circle</v-icon>
-              You already have an active pairing. Complete or terminate it before finding new matches.
+          <v-card-text v-if="existingPairings.length > 0" class="info lighten-5">
+            <v-alert type="info" outlined class="mb-0">
+              <v-icon left>mdi-information</v-icon>
+              You have {{ existingPairings.length }} active pairing{{ existingPairings.length > 1 ? 's' : '' }}. You can find mentors for different subjects.
               <v-btn text color="primary" to="/pairings" class="ml-2">View Pairings</v-btn>
             </v-alert>
           </v-card-text>
         </v-card>
 
         <!-- Matching Results -->
-        <div v-if="matches.length > 0">
+        <div v-if="availableMatches.length > 0">
           <h2 class="headline mb-4">Your Top Matches</h2>
 
           <v-row>
             <v-col
-              v-for="(match, index) in matches"
+              v-for="(match, index) in availableMatches"
               :key="match.mentor.id"
               cols="12"
               md="6"
@@ -198,26 +197,32 @@
                     </v-expansion-panel>
                   </v-expansion-panels>
 
-                  <div class="d-flex gap-2">
-                    <v-btn
-                      color="primary"
-                      outlined
-                      block
-                      @click="viewMentorProfile(match.mentor)"
-                    >
-                      <v-icon left>mdi-account</v-icon>
-                      View Profile
-                    </v-btn>
-                    <v-btn
-                      color="primary"
-                      block
-                      @click="requestPairing(match)"
-                      :loading="requestingPairing === match.mentor.id"
-                    >
-                      <v-icon left>mdi-handshake</v-icon>
-                      Request Pairing
-                    </v-btn>
-                  </div>
+                  <v-row dense class="mt-2">
+                    <v-col cols="6">
+                      <v-btn
+                        color="primary"
+                        outlined
+                        block
+                        small
+                        @click="viewMentorProfile(match.mentor)"
+                      >
+                        <v-icon left size="16">mdi-account</v-icon>
+                        Profile
+                      </v-btn>
+                    </v-col>
+                    <v-col cols="6">
+                      <v-btn
+                        color="primary"
+                        block
+                        small
+                        @click="requestPairing(match)"
+                        :loading="requestingPairing === match.mentor.id"
+                      >
+                        <v-icon left size="16">mdi-handshake</v-icon>
+                        Request
+                      </v-btn>
+                    </v-col>
+                  </v-row>
                 </v-card-text>
               </v-card>
             </v-col>
@@ -225,11 +230,16 @@
         </div>
 
         <!-- No matches yet -->
-        <div v-else-if="!loading && matches.length === 0 && hasSearched" class="text-center py-12">
+        <div v-else-if="!loading && availableMatches.length === 0 && hasSearched" class="text-center py-12">
           <v-icon size="80" color="grey lighten-1" class="mb-4">mdi-account-search</v-icon>
-          <h3 class="headline mb-2">No matches found</h3>
+          <h3 class="headline mb-2">
+            {{ matches.length > 0 ? 'No additional matches available' : 'No matches found' }}
+          </h3>
           <p class="text-body-1 text--secondary mb-6">
-            We couldn't find any suitable mentors at this time. Try updating your profile or check back later.
+            {{ matches.length > 0
+              ? 'You already have pairings covering these subjects. Try searching for mentors in different subject areas.'
+              : 'We couldn\'t find any suitable mentors at this time. Try updating your profile or check back later.'
+            }}
           </p>
           <v-btn color="primary" to="/profile">
             <v-icon left>mdi-account-edit</v-icon>
@@ -283,15 +293,38 @@ const loading = ref(false)
 const hasSearched = ref(false)
 const requestingPairing = ref<string | null>(null)
 const matches = ref<Match[]>([])
-const hasActivePairing = ref(false)
+const existingPairings = ref<any[]>([])
 const showMatchingLoader = ref(false)
 
-// Check if user has active pairing
+// Computed property to filter available matches based on existing pairings
+const availableMatches = computed(() => {
+  return matches.value.filter(match => {
+    // Check if student is already paired with this mentor
+    const alreadyPairedWithMentor = existingPairings.value.some((pairing: any) =>
+      pairing.mentor._id === match.mentor._id || pairing.mentor.id === match.mentor.id
+    )
+
+    // If already paired with this mentor, don't show again
+    if (alreadyPairedWithMentor) return false
+
+    // Check if student already has a pairing for any of this mentor's expertise subjects
+    const mentorSubjects = match.mentor.mentorProfile?.expertise || []
+    const hasConflictingSubject = existingPairings.value.some((pairing: any) => {
+      const pairedMentorSubjects = pairing.mentor.mentorProfile?.expertise || []
+      return mentorSubjects.some((subject: string) => pairedMentorSubjects.includes(subject))
+    })
+
+    // Allow pairing if no subject conflict (can have multiple mentors for different subjects)
+    return !hasConflictingSubject
+  })
+})
+
+// Check existing pairings
 const checkActivePairing = async () => {
   try {
     const response = await axios.get('/matching/pairings')
     const pairings = response.data.data.pairings
-    hasActivePairing.value = pairings.some((p: any) => p.status === 'active')
+    existingPairings.value = pairings.filter((p: any) => p.status === 'active')
   } catch (error) {
     console.error('Failed to check pairings:', error)
   }

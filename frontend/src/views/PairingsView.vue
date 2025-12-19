@@ -125,7 +125,7 @@
                   </div>
 
                   <v-row dense class="mt-2">
-                    <v-col cols="6">
+                    <v-col cols="4">
                       <v-btn
                         color="primary"
                         outlined
@@ -137,7 +137,7 @@
                         Schedule
                       </v-btn>
                     </v-col>
-                    <v-col cols="6">
+                    <v-col cols="4">
                       <v-btn
                         color="success"
                         block
@@ -146,6 +146,18 @@
                       >
                         <v-icon left size="16">mdi-check-circle</v-icon>
                         Complete
+                      </v-btn>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-btn
+                        color="error"
+                        outlined
+                        block
+                        small
+                        @click="showCancelDialogMethod(pairing)"
+                      >
+                        <v-icon left size="16">mdi-close-circle</v-icon>
+                        Terminate
                       </v-btn>
                     </v-col>
                   </v-row>

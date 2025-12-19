@@ -19,6 +19,7 @@ import userRoutes from './routes/user';
 import matchingRoutes from './routes/matching';
 import mediationRoutes from './routes/mediation';
 import chatRoutes from './routes/chat';
+import notificationRoutes from './routes/notifications';
 
 // Load environment variables
 dotenv.config();
@@ -75,6 +76,7 @@ app.use('/api/users', authenticate, userRoutes);
 app.use('/api/matching', authenticate, matchingRoutes);
 app.use('/api/mediation', authenticate, mediationRoutes);
 app.use('/api/chat', authenticate, chatRoutes);
+app.use('/api/notifications', authenticate, notificationRoutes);
 
 // Error handling middleware (must be last)
 app.use(errorHandler);

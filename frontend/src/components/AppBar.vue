@@ -30,6 +30,23 @@
         <v-icon>{{ isDark ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
       </v-btn>
 
+      <v-btn
+        icon
+        @click="notificationsStore.toggleDropdown()"
+        class="mr-2"
+        :color="notificationsStore.unreadCount > 0 ? 'warning' : undefined"
+      >
+        <v-badge
+          v-if="notificationsStore.unreadCount > 0"
+          :content="notificationsStore.unreadCount > 99 ? '99+' : notificationsStore.unreadCount"
+          color="error"
+          overlap
+        >
+          <v-icon>mdi-bell</v-icon>
+        </v-badge>
+        <v-icon v-else>mdi-bell</v-icon>
+      </v-btn>
+
       <v-menu offset-y>
         <template v-slot:activator="{ props }">
           <v-btn
@@ -199,15 +216,21 @@
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
+
+  <!-- Notification Dropdown -->
+  <NotificationDropdown />
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useTheme } from 'vuetify'
+import { useNotificationsStore } from '@/stores/notifications'
+import NotificationDropdown from '@/components/notifications/NotificationDropdown.vue'
 
 const authStore = useAuthStore()
 const theme = useTheme()
+const notificationsStore = useNotificationsStore()
 
 const drawer = ref(false)
 const isDark = computed(() => theme.global.current.value.dark)

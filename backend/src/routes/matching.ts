@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import User from '../models/User';
 import MentorStudentPairing from '../models/MentorStudentPairing';
 import { logger } from '../utils/logger';
+import { createNotification } from './notifications';
 
 const router = express.Router();
 
@@ -166,6 +167,28 @@ router.post('/pair', async (req: Request, res: Response, next: NextFunction) => 
 
     await pairing.save();
 
+    // Create notifications for both parties
+    try {
+      await createNotification(
+        mentor._id.toString(),
+        'pairing_request',
+        'New Student Pairing',
+        `${student.firstName} ${student.lastName} has requested to be paired with you.`,
+        { pairingId: pairing._id, studentId: student._id }
+      );
+
+      await createNotification(
+        student._id.toString(),
+        'pairing_accepted',
+        'Mentor Pairing Confirmed',
+        `You have been paired with ${mentor.firstName} ${mentor.lastName}.`,
+        { pairingId: pairing._id, mentorId: mentor._id }
+      );
+    } catch (notificationError) {
+      logger.error('Failed to create pairing notifications:', notificationError);
+      // Don't fail the pairing creation if notifications fail
+    }
+
     logger.info(`New pairing created: Mentor ${mentor.email} - Student ${student.email}`);
 
     res.status(201).json({
@@ -326,6 +349,27 @@ router.delete('/pairings/:id', async (req: Request, res: Response, next: NextFun
     });
 
     await pairing.save();
+
+    // Create termination notifications
+    try {
+      const terminator = await User.findById(userId);
+      const otherUserId = pairing.mentor.toString() === userId
+        ? pairing.student.toString()
+        : pairing.mentor.toString();
+      const otherUser = await User.findById(otherUserId);
+
+      if (otherUser && terminator) {
+        await createNotification(
+          otherUserId,
+          'pairing_terminated',
+          'Pairing Terminated',
+          `${terminator.firstName} ${terminator.lastName} has terminated your pairing.`,
+          { pairingId: pairing._id, terminatedBy: userId, reason }
+        );
+      }
+    } catch (notificationError) {
+      logger.error('Failed to create termination notifications:', notificationError);
+    }
 
     // Update user engagement if needed
     if (pairing.status === 'active') {

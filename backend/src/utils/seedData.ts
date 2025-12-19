@@ -3,6 +3,7 @@ import User from '../models/User';
 import MentorStudentPairing from '../models/MentorStudentPairing';
 import Chat from '../models/Chat';
 import MediationTicket from '../models/MediationTicket';
+import Notification from '../models/Notification';
 import { logger } from './logger';
 
 // Mock data for seeding the database
@@ -1185,6 +1186,91 @@ export const seedDatabase = async (): Promise<void> => {
         }
       })
     ].map(pairing => pairing.save()));
+
+    // Create notifications for demonstration
+    const notifications = await Promise.all([
+      // Pairing notifications
+      new Notification({
+        recipient: students[0]._id, // Jamie Demo
+        type: 'pairing_accepted',
+        title: 'Mentor Pairing Confirmed',
+        message: 'You have been paired with Dr. Smith. Start your learning journey!',
+        data: { pairingId: pairings[0]._id, mentorId: mentors[0]._id },
+        isRead: false
+      }),
+      new Notification({
+        recipient: mentors[0]._id, // Dr. Smith
+        type: 'pairing_request',
+        title: 'New Student Pairing',
+        message: 'Jamie Demo has been paired with you for Mathematics and Physics tutoring.',
+        data: { pairingId: pairings[0]._id, studentId: students[0]._id },
+        isRead: false
+      }),
+      new Notification({
+        recipient: students[1]._id, // Taylor Sample
+        type: 'session_scheduled',
+        title: 'Session Scheduled',
+        message: 'Your chemistry session with Prof. Garcia is scheduled for tomorrow at 2:00 PM.',
+        data: { pairingId: pairings[1]._id, sessionTime: new Date(Date.now() + 24 * 60 * 60 * 1000) },
+        isRead: false
+      }),
+      new Notification({
+        recipient: mentors[2]._id, // Dr. Chen (Chemistry)
+        type: 'pairing_accepted',
+        title: 'New Student Pairing',
+        message: 'Sofia Chen has been paired with you for Chemistry tutoring.',
+        data: { pairingId: pairings[2]._id, studentId: students[4]._id },
+        isRead: true
+      }),
+      new Notification({
+        recipient: students[4]._id, // Sofia Chen
+        type: 'pairing_accepted',
+        title: 'Mentor Pairing Confirmed',
+        message: 'Welcome! You have been paired with Dr. Chen for Chemistry tutoring.',
+        data: { pairingId: pairings[2]._id, mentorId: mentors[2]._id },
+        isRead: true
+      }),
+      new Notification({
+        recipient: mentors[3]._id, // Dr. Williams (Physics)
+        type: 'message_received',
+        title: 'New Message',
+        message: 'Alex Rivera sent you a message about quantum physics homework.',
+        data: { chatId: `pairing-${pairings[3]._id}`, senderId: students[3]._id },
+        isRead: false
+      }),
+      new Notification({
+        recipient: students[5]._id, // Marcus Johnson
+        type: 'system',
+        title: 'Welcome to ACEIB!',
+        message: 'Thanks for joining! Complete your profile to get matched with the best mentors.',
+        data: {},
+        isRead: true
+      }),
+      new Notification({
+        recipient: mentors[1]._id, // Prof. Garcia
+        type: 'session_completed',
+        title: 'Session Completed',
+        message: 'Your session with Taylor Sample has been marked as complete.',
+        data: { pairingId: pairings[1]._id, sessionDuration: 90 },
+        isRead: false
+      }),
+      new Notification({
+        recipient: students[6]._id, // Isabella Garcia
+        type: 'pairing_accepted',
+        title: 'Spanish Mentor Found!',
+        message: 'You have been paired with Señora Martinez for Spanish language learning.',
+        data: { pairingId: pairings[4]._id, mentorId: mentors[7]._id },
+        isRead: false
+      }),
+      new Notification({
+        recipient: mentors[4]._id, // Dr. Rodriguez (Biology)
+        type: 'pairing_terminated',
+        title: 'Pairing Terminated',
+        message: 'Your pairing with Emma Williams has been terminated.',
+        data: { pairingId: pairings[5]._id, terminatedBy: students[8]._id, reason: 'Schedule conflict' },
+        isRead: true
+      })
+    ].map(notification => notification.save()));
 
     // Create chat rooms and messages
     const chats = await Promise.all([

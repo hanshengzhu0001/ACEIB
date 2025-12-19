@@ -55,3 +55,39 @@
 {"level":"info","message":"🌱 Mock data seeded successfully","timestamp":"2025-12-19T05:36:55.281Z"}
 {"level":"info","message":"User logged in: student.demo1@aceib-platform.demo","timestamp":"2025-12-19T05:37:00.196Z"}
 {"level":"info","message":"Generated 2 matches for student: student.demo1@aceib-platform.demo","timestamp":"2025-12-19T05:37:03.916Z"}
+{"level":"info","message":"User logged in: student.demo1@aceib-platform.demo","timestamp":"2025-12-19T05:38:47.885Z"}
+{"level":"info","message":"📦 Connected to MongoDB successfully","timestamp":"2025-12-19T05:39:43.761Z"}
+{"level":"info","message":"Database already has data, skipping seed","timestamp":"2025-12-19T05:39:43.814Z"}
+{"level":"info","message":"🚀 Server running on port 3001","timestamp":"2025-12-19T05:39:43.815Z"}
+{"level":"info","message":"📡 Socket.io server initialized","timestamp":"2025-12-19T05:39:43.816Z"}
+{"level":"info","message":"🌱 Mock data seeded successfully","timestamp":"2025-12-19T05:39:43.816Z"}
+{"level":"info","message":"📦 Connected to MongoDB successfully","timestamp":"2025-12-19T05:39:48.182Z"}
+{"level":"info","message":"Database already has data, skipping seed","timestamp":"2025-12-19T05:39:48.205Z"}
+{"level":"info","message":"🚀 Server running on port 3001","timestamp":"2025-12-19T05:39:48.206Z"}
+{"level":"info","message":"📡 Socket.io server initialized","timestamp":"2025-12-19T05:39:48.206Z"}
+{"level":"info","message":"🌱 Mock data seeded successfully","timestamp":"2025-12-19T05:39:48.206Z"}
+{"level":"info","message":"📦 Connected to MongoDB successfully","timestamp":"2025-12-19T05:39:51.070Z"}
+{"level":"info","message":"Database already has data, skipping seed","timestamp":"2025-12-19T05:39:51.092Z"}
+{"level":"info","message":"🚀 Server running on port 3001","timestamp":"2025-12-19T05:39:51.093Z"}
+{"level":"info","message":"📡 Socket.io server initialized","timestamp":"2025-12-19T05:39:51.094Z"}
+{"level":"info","message":"🌱 Mock data seeded successfully","timestamp":"2025-12-19T05:39:51.094Z"}
+{"level":"info","message":"📦 Connected to MongoDB successfully","timestamp":"2025-12-19T05:39:54.675Z"}
+{"level":"info","message":"Database already has data, skipping seed","timestamp":"2025-12-19T05:39:54.697Z"}
+{"level":"info","message":"🚀 Server running on port 3001","timestamp":"2025-12-19T05:39:54.698Z"}
+{"level":"info","message":"📡 Socket.io server initialized","timestamp":"2025-12-19T05:39:54.698Z"}
+{"level":"info","message":"🌱 Mock data seeded successfully","timestamp":"2025-12-19T05:39:54.698Z"}
+{"level":"info","message":"📦 Connected to MongoDB successfully","timestamp":"2025-12-19T05:40:02.350Z"}
+{"level":"info","message":"Database already has data, skipping seed","timestamp":"2025-12-19T05:40:02.372Z"}
+{"level":"info","message":"🚀 Server running on port 3001","timestamp":"2025-12-19T05:40:02.373Z"}
+{"level":"info","message":"📡 Socket.io server initialized","timestamp":"2025-12-19T05:40:02.373Z"}
+{"level":"info","message":"🌱 Mock data seeded successfully","timestamp":"2025-12-19T05:40:02.373Z"}
+{"level":"info","message":"📦 Connected to MongoDB successfully","timestamp":"2025-12-19T05:40:54.710Z"}
+{"level":"info","message":"Database already has data, skipping seed","timestamp":"2025-12-19T05:40:54.730Z"}
+{"level":"info","message":"🚀 Server running on port 3001","timestamp":"2025-12-19T05:40:54.731Z"}
+{"level":"info","message":"📡 Socket.io server initialized","timestamp":"2025-12-19T05:40:54.731Z"}
+{"level":"info","message":"🌱 Mock data seeded successfully","timestamp":"2025-12-19T05:40:54.732Z"}
+{"level":"info","message":"📦 Connected to MongoDB successfully","timestamp":"2025-12-19T05:41:15.624Z"}
+{"level":"info","message":"Database already has data, skipping seed","timestamp":"2025-12-19T05:41:15.647Z"}
+{"level":"info","message":"🚀 Server running on port 3001","timestamp":"2025-12-19T05:41:15.649Z"}
+{"level":"info","message":"📡 Socket.io server initialized","timestamp":"2025-12-19T05:41:15.649Z"}
+{"level":"info","message":"🌱 Mock data seeded successfully","timestamp":"2025-12-19T05:41:15.649Z"}

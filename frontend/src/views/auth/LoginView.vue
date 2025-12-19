@@ -12,7 +12,7 @@
           </v-card-title>
 
           <v-card-text>
-            <v-form ref="form" v-model="valid" @submit.prevent="handleLogin">
+            <v-form ref="formRef" v-model="valid" @submit.prevent="handleLogin">
               <v-text-field
                 v-model="form.email"
                 label="Email"
@@ -54,9 +54,19 @@
                 large
                 :loading="loading"
                 :disabled="!valid"
-                class="mb-4"
+                class="mb-2"
               >
                 Sign In
+              </v-btn>
+
+              <v-btn
+                text
+                block
+                small
+                @click="resetForm"
+                class="mb-4"
+              >
+                Clear Form
               </v-btn>
 
               <v-divider class="mb-4"></v-divider>
@@ -104,14 +114,23 @@ const form = reactive({
 const valid = ref(false)
 const loading = computed(() => authStore.loading)
 
+// Form ref with proper typing
+const formRef = ref<any>(null)
+
 const emailRules = [
-  (v: string) => !!v || 'Email is required',
-  (v: string) => /.+@.+\..+/.test(v) || 'Email must be valid'
+  (v: string) => {
+    if (!v) return 'Email is required'
+    if (!v.includes('@') || !v.includes('.')) return 'Please enter a valid email'
+    return true
+  }
 ]
 
 const passwordRules = [
-  (v: string) => !!v || 'Password is required',
-  (v: string) => (v && v.length >= 6) || 'Password must be at least 6 characters'
+  (v: string) => {
+    if (!v) return 'Password is required'
+    if (v.length < 6) return 'Password must be at least 6 characters'
+    return true
+  }
 ]
 
 const handlePaste = (event: ClipboardEvent, field: string) => {
@@ -124,18 +143,32 @@ const handlePaste = (event: ClipboardEvent, field: string) => {
   }
   // Force validation update
   setTimeout(() => {
-    form.value?.validate()
+    formRef.value?.validate()
   }, 0)
+}
+
+const resetForm = () => {
+  form.email = ''
+  form.password = ''
+  valid.value = false
+  formRef.value?.resetValidation()
 }
 
 const handleLogin = async () => {
   if (!valid.value) return
 
+  console.log('Starting login process...')
   const result = await authStore.login(form.email, form.password)
+  console.log('Login result:', result)
 
   if (result.success) {
-    router.push('/dashboard')
+    console.log('Login successful, user:', authStore.user)
+    console.log('Is authenticated:', authStore.isAuthenticated)
+    console.log('Redirecting to dashboard...')
+    await router.push('/dashboard')
+    console.log('Redirect completed')
   } else {
+    console.log('Login failed:', result.error)
     // Error is handled by the store
   }
 }

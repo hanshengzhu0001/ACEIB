@@ -35,8 +35,13 @@ export const useAuthStore = defineStore('auth', () => {
   const login = async (email: string, password: string) => {
     loading.value = true
     try {
+      console.log('Making login request to backend...')
       const response = await axios.post('/auth/login', { email, password })
+      console.log('Backend response received:', response.data)
+
       const { user: userData, token: authToken } = response.data.data
+      console.log('Setting user data:', userData)
+      console.log('Setting token:', authToken ? '[PRESENT]' : '[MISSING]')
 
       user.value = userData
       token.value = authToken
@@ -44,8 +49,11 @@ export const useAuthStore = defineStore('auth', () => {
       localStorage.setItem('token', authToken)
       axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`
 
+      console.log('Auth state after login:', { user: user.value, token: token.value, isAuthenticated: isAuthenticated.value })
+
       return { success: true }
     } catch (error: any) {
+      console.error('Login error:', error)
       return {
         success: false,
         error: error.response?.data?.error || 'Login failed'

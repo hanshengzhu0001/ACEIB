@@ -48,3 +48,10 @@
 {"level":"info","message":"🚀 Server running on port 3001","timestamp":"2025-12-19T05:36:12.122Z"}
 {"level":"info","message":"📡 Socket.io server initialized","timestamp":"2025-12-19T05:36:12.122Z"}
 {"level":"info","message":"🌱 Mock data seeded successfully","timestamp":"2025-12-19T05:36:12.122Z"}
+{"level":"info","message":"📦 Connected to MongoDB successfully","timestamp":"2025-12-19T05:36:54.847Z"}
+{"level":"info","message":"Database already has data, skipping seed","timestamp":"2025-12-19T05:36:55.279Z"}
+{"level":"info","message":"🚀 Server running on port 3001","timestamp":"2025-12-19T05:36:55.281Z"}
+{"level":"info","message":"📡 Socket.io server initialized","timestamp":"2025-12-19T05:36:55.281Z"}
+{"level":"info","message":"🌱 Mock data seeded successfully","timestamp":"2025-12-19T05:36:55.281Z"}
+{"level":"info","message":"User logged in: student.demo1@aceib-platform.demo","timestamp":"2025-12-19T05:37:00.196Z"}
+{"level":"info","message":"Generated 2 matches for student: student.demo1@aceib-platform.demo","timestamp":"2025-12-19T05:37:03.916Z"}

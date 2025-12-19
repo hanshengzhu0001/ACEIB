@@ -245,12 +245,15 @@
 
           <p class="text-body-2 text--secondary mb-4">
             This action cannot be undone. The pairing will be marked as terminated and moved to your pairing history.
+            {{ isStudent ? 'You will lose access to this mentor.' : 'This student will no longer be able to schedule sessions with you.' }}
           </p>
 
           <v-textarea
             v-model="cancelReason"
-            label="Reason for termination (optional)"
-            placeholder="Please provide a reason for terminating this pairing..."
+            :label="isStudent ? 'Reason for termination (optional)' : 'Reason for ending mentorship (optional)'"
+            :placeholder="isStudent
+              ? 'Please provide a reason for terminating this pairing...'
+              : 'Please provide feedback about why you\'re ending this mentorship...'"
             outlined
             rows="3"
             class="mb-4"
@@ -258,6 +261,7 @@
 
           <v-alert type="warning" outlined dense>
             <strong>Note:</strong> Terminating a pairing will not affect completed sessions or ratings.
+            <span v-if="!isStudent"><br><strong>Mentor note:</strong> This will free up your schedule for other students.</span>
           </v-alert>
         </v-card-text>
 

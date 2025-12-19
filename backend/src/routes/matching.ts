@@ -218,7 +218,7 @@ router.get('/pairings', async (req: Request, res: Response, next: NextFunction) 
 // @access  Private
 router.put('/pairings/:id/status', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { status } = req.body;
+    const { status, reason } = req.body;
     const userId = (req as any).user.userId;
     const userRole = (req as any).user.role;
 
@@ -241,7 +241,25 @@ router.put('/pairings/:id/status', async (req: Request, res: Response, next: Nex
       });
     }
 
+    // Validate status transitions
+    const validStatuses = ['active', 'pending', 'completed', 'terminated', 'paused'];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid status'
+      });
+    }
+
     pairing.status = status;
+
+    // Add status change to history
+    pairing.statusHistory.push({
+      status,
+      changedBy: userId,
+      changedAt: new Date(),
+      note: reason || `Status changed to ${status}`
+    });
+
     if (status === 'completed' || status === 'terminated') {
       pairing.endDate = new Date();
     }
@@ -253,6 +271,75 @@ router.put('/pairings/:id/status', async (req: Request, res: Response, next: Nex
     res.json({
       success: true,
       data: { pairing }
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @route   DELETE /api/matching/pairings/:id
+// @desc    Cancel/terminate a pairing
+// @access  Private
+router.delete('/pairings/:id', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { reason } = req.body;
+    const userId = (req as any).user.userId;
+    const userRole = (req as any).user.role;
+
+    const pairing = await MentorStudentPairing.findById(req.params.id);
+
+    if (!pairing) {
+      return res.status(404).json({
+        success: false,
+        error: 'Pairing not found'
+      });
+    }
+
+    // Check permissions - users can only terminate their own pairings
+    if (userRole !== 'admin' &&
+        pairing.mentor.toString() !== userId &&
+        pairing.student.toString() !== userId) {
+      return res.status(403).json({
+        success: false,
+        error: 'Not authorized to terminate this pairing'
+      });
+    }
+
+    // Prevent termination of completed pairings
+    if (pairing.status === 'completed') {
+      return res.status(400).json({
+        success: false,
+        error: 'Cannot terminate a completed pairing'
+      });
+    }
+
+    // Update pairing status to terminated
+    pairing.status = 'terminated';
+    pairing.endDate = new Date();
+
+    // Add termination reason to status history
+    pairing.statusHistory.push({
+      status: 'terminated',
+      changedBy: userId,
+      changedAt: new Date(),
+      note: reason || 'Pairing terminated by user'
+    });
+
+    await pairing.save();
+
+    // Update user engagement if needed
+    if (pairing.status === 'active') {
+      // Could add logic to update engagement metrics here
+    }
+
+    logger.info(`Pairing terminated: ${pairing._id} by user: ${userId}`);
+
+    res.json({
+      success: true,
+      data: {
+        pairing,
+        message: 'Pairing has been terminated successfully'
+      }
     });
   } catch (error) {
     next(error);

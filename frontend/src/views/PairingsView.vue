@@ -61,6 +61,13 @@
                         <v-list-item-icon><v-icon color="warning">mdi-alert</v-icon></v-list-item-icon>
                         <v-list-item-content><v-list-item-title>Report Issue</v-list-item-title></v-list-item-content>
                       </v-list-item>
+                      <v-list-item
+                        v-if="pairing.status === 'active'"
+                        @click="showCancelDialogMethod(pairing)"
+                      >
+                        <v-list-item-icon><v-icon color="error">mdi-close-circle</v-icon></v-list-item-icon>
+                        <v-list-item-content><v-list-item-title>Terminate Pairing</v-list-item-title></v-list-item-content>
+                      </v-list-item>
                     </v-list>
                   </v-menu>
                 </v-card-title>
@@ -221,6 +228,56 @@
         </div>
       </v-col>
     </v-row>
+
+    <!-- Cancel Pairing Dialog -->
+    <v-dialog v-model="showCancelDialog" max-width="500px">
+      <v-card>
+        <v-card-title class="d-flex align-center">
+          <v-icon left color="error">mdi-alert-circle</v-icon>
+          Terminate Pairing
+        </v-card-title>
+
+        <v-card-text v-if="pairingToCancel">
+          <p class="mb-4">
+            Are you sure you want to terminate your pairing with
+            <strong>{{ getOtherUser(pairingToCancel).firstName }} {{ getOtherUser(pairingToCancel).lastName }}</strong>?
+          </p>
+
+          <p class="text-body-2 text--secondary mb-4">
+            This action cannot be undone. The pairing will be marked as terminated and moved to your pairing history.
+          </p>
+
+          <v-textarea
+            v-model="cancelReason"
+            label="Reason for termination (optional)"
+            placeholder="Please provide a reason for terminating this pairing..."
+            outlined
+            rows="3"
+            class="mb-4"
+          ></v-textarea>
+
+          <v-alert type="warning" outlined dense>
+            <strong>Note:</strong> Terminating a pairing will not affect completed sessions or ratings.
+          </v-alert>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn @click="closeCancelDialog" :disabled="canceling">
+            Cancel
+          </v-btn>
+          <v-btn
+            color="error"
+            @click="cancelPairing"
+            :loading="canceling"
+            :disabled="!pairingToCancel"
+          >
+            <v-icon left>mdi-close-circle</v-icon>
+            Terminate Pairing
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -236,6 +293,10 @@ const authStore = useAuthStore()
 const isStudent = computed(() => authStore.isStudent)
 const loading = ref(true)
 const pairings = ref<any[]>([])
+const showCancelDialog = ref(false)
+const pairingToCancel = ref<any>(null)
+const cancelReason = ref('')
+const canceling = ref(false)
 
 const activePairings = computed(() =>
   pairings.value.filter(p => p.status === 'active')
@@ -317,6 +378,46 @@ const markSessionComplete = async (pairing: any) => {
 
 const viewCompletedPairing = (pairing: any) => {
   alert(`Viewing completed pairing details for ${getOtherUser(pairing).firstName}`)
+}
+
+// Cancel pairing methods
+const showCancelDialogMethod = (pairing: any) => {
+  pairingToCancel.value = pairing
+  cancelReason.value = ''
+  showCancelDialog.value = true
+}
+
+const cancelPairing = async () => {
+  if (!pairingToCancel.value) return
+
+  canceling.value = true
+  try {
+    await axios.delete(`/matching/pairings/${pairingToCancel.value._id}`, {
+      data: { reason: cancelReason.value || 'Terminated by user' }
+    })
+
+    // Show success message
+    alert('Pairing has been terminated successfully')
+
+    // Reload pairings
+    await loadPairings()
+
+    // Close dialog
+    showCancelDialog.value = false
+    pairingToCancel.value = null
+    cancelReason.value = ''
+  } catch (error: any) {
+    console.error('Failed to cancel pairing:', error)
+    alert('Failed to terminate pairing. Please try again.')
+  } finally {
+    canceling.value = false
+  }
+}
+
+const closeCancelDialog = () => {
+  showCancelDialog.value = false
+  pairingToCancel.value = null
+  cancelReason.value = ''
 }
 
 onMounted(() => {

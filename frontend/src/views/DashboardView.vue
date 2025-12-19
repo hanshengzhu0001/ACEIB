@@ -194,44 +194,17 @@
         </v-card>
       </v-col>
 
-      <!-- Upcoming Sessions -->
-      <v-col cols="12" md="6" class="mb-6">
-        <v-card elevation="2">
-          <v-card-title>
-            <v-icon left>mdi-calendar-clock</v-icon>
-            Upcoming Sessions
-          </v-card-title>
-          <v-card-text>
-            <div v-for="session in upcomingSessions" :key="session.id" class="mb-4">
-              <v-row align="center">
-                <v-col cols="2">
-                  <v-avatar size="40" :color="session.color">
-                    <v-icon color="white" size="20">{{ session.icon }}</v-icon>
-                  </v-avatar>
-                </v-col>
-                <v-col cols="7">
-                  <div class="font-weight-medium">{{ session.title }}</div>
-                  <div class="caption text--secondary">{{ session.time }}</div>
-                </v-col>
-                <v-col cols="3" class="text-end">
-                  <v-btn
-                    icon
-                    small
-                    @click="$router.push(session.link)"
-                  >
-                    <v-icon>mdi-chevron-right</v-icon>
-                  </v-btn>
-                </v-col>
-              </v-row>
-              <v-divider class="mt-3"></v-divider>
-            </div>
-
-            <div v-if="upcomingSessions.length === 0" class="text-center py-8">
-              <v-icon size="64" color="grey lighten-1">mdi-calendar-blank</v-icon>
-              <p class="text--secondary mt-2">No upcoming sessions</p>
-            </div>
-          </v-card-text>
-        </v-card>
+      <!-- Weekly Schedule -->
+      <v-col cols="12" class="mb-6">
+        <TimeTable
+          title="My Weekly Schedule"
+          :sessions="weeklySessions"
+          :allow-scheduling="isStudent || isMentor"
+          :allow-editing="true"
+          @schedule-session="handleScheduleSession"
+          @edit-session="handleEditSession"
+          @slot-click="handleSlotClick"
+        />
       </v-col>
     </v-row>
 
@@ -278,6 +251,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import axios from 'axios'
+import TimeTable from '@/components/scheduling/TimeTable.vue'
 
 const authStore = useAuthStore()
 const user = computed(() => authStore.user)
@@ -303,7 +277,7 @@ const stats = ref({
 
 const unreadCount = ref(0)
 const recentActivities = ref<any[]>([])
-const upcomingSessions = ref<any[]>([])
+const weeklySessions = ref<any[]>([])
 const currentGoals = ref<any[]>([])
 
 // Fetch dashboard data
@@ -358,23 +332,25 @@ const fetchDashboardData = async () => {
       }
     ]
 
-    // Mock upcoming sessions (would come from API)
-    upcomingSessions.value = [
+    // Mock weekly sessions (would come from API)
+    weeklySessions.value = [
       {
-        id: 1,
+        id: '1',
         title: 'Math Tutoring - Calculus',
-        time: 'Tomorrow at 3:00 PM',
-        icon: 'mdi-calculator',
-        color: 'primary',
-        link: '/chat'
+        type: 'mentoring',
+        date: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Tomorrow
+        time: '15:00',
+        duration: 60,
+        participants: ['Sarah Johnson']
       },
       {
-        id: 2,
+        id: '2',
         title: 'Chemistry Study Session',
-        time: 'Friday at 2:00 PM',
-        icon: 'mdi-flask',
-        color: 'success',
-        link: '/pairings'
+        type: 'study',
+        date: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Friday
+        time: '14:00',
+        duration: 90,
+        participants: ['Dr. Garcia']
       }
     ]
 
@@ -399,6 +375,25 @@ const fetchDashboardData = async () => {
   } catch (error) {
     console.error('Failed to fetch dashboard data:', error)
   }
+}
+
+// Handler methods for TimeTable component
+const handleScheduleSession = (sessionData: any) => {
+  console.log('Scheduling new session:', sessionData)
+  // In a real app, this would make an API call to schedule the session
+  alert('Session scheduled successfully! (This would integrate with your backend)')
+}
+
+const handleEditSession = (session: any) => {
+  console.log('Editing session:', session)
+  // In a real app, this would open an edit dialog or navigate to edit page
+  alert('Edit session functionality would be implemented here')
+}
+
+const handleSlotClick = (date: Date, hour: number) => {
+  console.log('Slot clicked:', date, hour)
+  // In a real app, this could open a quick scheduling dialog
+  alert(`Clicked on ${date.toLocaleDateString()} at ${hour}:00. Quick scheduling could be implemented here.`)
 }
 
 onMounted(() => {

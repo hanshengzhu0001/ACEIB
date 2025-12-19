@@ -36,6 +36,8 @@ export const useAuthStore = defineStore('auth', () => {
     loading.value = true
     try {
       console.log('Making login request to backend...')
+      console.log('Axios baseURL:', axios.defaults.baseURL || 'none (using Vite proxy)')
+      console.log('Request URL will be:', '/api/auth/login (proxied by Vite)')
       const response = await axios.post('/auth/login', { email, password })
       console.log('Backend response received:', response.data)
 

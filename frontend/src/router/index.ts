@@ -104,7 +104,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // Check role-based access
-  if (to.meta.roles && !to.meta.roles.includes(authStore.user?.role)) {
+  if (to.meta.roles && Array.isArray(to.meta.roles) && !to.meta.roles.includes(authStore.user?.role)) {
     next({ name: 'dashboard' })
     return
   }

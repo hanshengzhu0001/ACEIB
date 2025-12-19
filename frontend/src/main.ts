@@ -9,7 +9,7 @@ import vuetify from './plugins/vuetify'
 import './styles/main.scss'
 
 // Configure axios
-axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api'
+axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001'
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 
 // Add axios interceptor for auth

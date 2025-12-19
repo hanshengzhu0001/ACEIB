@@ -38,6 +38,7 @@
                         :rules="nameRules"
                         outlined
                         dense
+                        @paste="handlePaste($event, 'firstName')"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" md="6">
@@ -47,6 +48,7 @@
                         :rules="nameRules"
                         outlined
                         dense
+                        @paste="handlePaste($event, 'lastName')"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -70,6 +72,7 @@
                     dense
                     rows="4"
                     class="mb-4"
+                    @paste="handlePaste($event, 'profile.bio')"
                   ></v-textarea>
 
                   <v-combobox
@@ -350,10 +353,8 @@ const mentorValid = ref(true)
 const passwordValid = ref(false)
 
 const joinDate = computed(() => {
-  if (user.value?.createdAt) {
-    return new Date(user.value.createdAt).toLocaleDateString()
-  }
-  return 'Unknown'
+  // User object might not have createdAt in the limited view
+  return 'Member'
 })
 
 // Profile data
@@ -554,6 +555,32 @@ const changePassword = async () => {
   } finally {
     loading.value = false
   }
+}
+
+const handlePaste = (event: ClipboardEvent, field: string) => {
+  // Ensure pasted content updates the v-model
+  const pastedText = event.clipboardData?.getData('text') || ''
+
+  // Update the appropriate form field
+  if (field.includes('.')) {
+    // Handle nested fields like 'profile.bio'
+    const [parent, child] = field.split('.')
+    if (parent === 'profile') {
+      profileData.value.profile[child as keyof typeof profileData.value.profile] = pastedText
+    } else if (parent === 'studentProfile') {
+      profileData.value.studentProfile[child as keyof typeof profileData.value.studentProfile] = pastedText
+    } else if (parent === 'mentorProfile') {
+      profileData.value.mentorProfile[child as keyof typeof profileData.value.mentorProfile] = pastedText
+    }
+  } else {
+    // Handle top-level fields
+    profileData.value[field as keyof typeof profileData.value] = pastedText
+  }
+
+  // Force validation update
+  setTimeout(() => {
+    generalForm.value?.validate()
+  }, 0)
 }
 
 onMounted(() => {

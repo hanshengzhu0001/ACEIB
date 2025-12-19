@@ -41,4 +41,13 @@ export default createVuetify({
       },
     },
   },
+  defaults: {
+    VTextField: {
+      variant: 'outlined',
+      density: 'comfortable',
+    },
+    VBtn: {
+      variant: 'flat',
+    },
+  },
 })

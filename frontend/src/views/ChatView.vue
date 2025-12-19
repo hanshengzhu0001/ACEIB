@@ -95,8 +95,8 @@
               </div>
               <v-spacer></v-spacer>
               <v-menu offset-y>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon v-bind="attrs" v-on="on">
+                <template v-slot:activator="{ props }">
+                  <v-btn icon v-bind="props">
                     <v-icon>mdi-dots-vertical</v-icon>
                   </v-btn>
                 </template>
@@ -157,6 +157,7 @@
                       hide-details
                       :disabled="sending"
                       @keydown.enter.prevent="sendMessage"
+                      @paste="handlePaste"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="2">
@@ -313,6 +314,12 @@ const scrollToBottom = () => {
       container.scrollTop = container.scrollHeight
     }
   })
+}
+
+// Handle paste events
+const handlePaste = (event: ClipboardEvent) => {
+  const pastedText = event.clipboardData?.getData('text') || ''
+  newMessage.value = pastedText
 }
 
 // Actions

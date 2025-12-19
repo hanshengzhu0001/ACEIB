@@ -181,8 +181,8 @@ ChatSchema.statics.findByParticipants = function(participantIds: mongoose.Types.
 };
 
 // Method to mark messages as read
-ChatSchema.methods.markAsRead = function(userId: mongoose.Types.ObjectId) {
-  this.messages.forEach(message => {
+ChatSchema.methods.markAsRead = function(userId: mongoose.Types.ObjectId): Promise<any> {
+  this.messages.forEach((message: any) => {
     if (!message.readBy.includes(userId) && !message.sender.equals(userId)) {
       message.readBy.push(userId);
     }
@@ -196,7 +196,7 @@ ChatSchema.methods.addMessage = function(messageData: {
   content: string;
   messageType?: string;
   attachments?: any[];
-}) {
+}): Promise<any> {
   const message = {
     _id: new mongoose.Types.ObjectId(),
     sender: messageData.sender,

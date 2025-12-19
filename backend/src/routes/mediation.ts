@@ -189,6 +189,7 @@ router.put('/tickets/:id/status', async (req: Request, res: Response, next: Next
     ticket.statusHistory.push({
       status,
       changedBy: userId,
+      changedAt: new Date(),
       note: note || `Status changed to ${status}`
     });
 

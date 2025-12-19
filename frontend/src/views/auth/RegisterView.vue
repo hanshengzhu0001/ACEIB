@@ -34,6 +34,7 @@
                       dense
                       class="mb-4"
                       required
+                      @paste="handlePaste($event, 'firstName')"
                     ></v-text-field>
 
                     <v-text-field
@@ -45,6 +46,7 @@
                       dense
                       class="mb-4"
                       required
+                      @paste="handlePaste($event, 'lastName')"
                     ></v-text-field>
 
                     <v-text-field
@@ -57,6 +59,7 @@
                       dense
                       class="mb-4"
                       required
+                      @paste="handlePaste($event, 'email')"
                     ></v-text-field>
 
                     <v-select
@@ -81,6 +84,7 @@
                       dense
                       class="mb-4"
                       required
+                      @paste="handlePaste($event, 'password')"
                     ></v-text-field>
 
                     <v-text-field
@@ -93,6 +97,7 @@
                       dense
                       class="mb-4"
                       required
+                      @paste="handlePaste($event, 'confirmPassword')"
                     ></v-text-field>
                   </v-form>
 
@@ -155,6 +160,7 @@
                         dense
                         class="mb-4"
                         rows="3"
+                        @paste="handlePaste($event, 'studentProfile.goals')"
                       ></v-textarea>
                     </template>
 
@@ -215,6 +221,7 @@
                       dense
                       class="mb-4"
                       rows="3"
+                      @paste="handlePaste($event, 'profile.bio')"
                     ></v-textarea>
                   </v-form>
 
@@ -430,6 +437,33 @@ const handleRegister = async () => {
   } else {
     // Error is handled by the store
   }
+}
+
+const handlePaste = (event: ClipboardEvent, field: string) => {
+  // Ensure pasted content updates the v-model
+  const pastedText = event.clipboardData?.getData('text') || ''
+
+  // Update the appropriate form field
+  if (field.includes('.')) {
+    // Handle nested fields like 'profile.bio'
+    const [parent, child] = field.split('.')
+    if (parent === 'profile') {
+      form.profile[child as keyof typeof form.profile] = pastedText
+    } else if (parent === 'studentProfile') {
+      form.studentProfile[child as keyof typeof form.studentProfile] = pastedText
+    } else if (parent === 'mentorProfile') {
+      form.mentorProfile[child as keyof typeof form.mentorProfile] = pastedText
+    }
+  } else {
+    // Handle top-level fields
+    form[field as keyof typeof form] = pastedText
+  }
+
+  // Force validation update
+  setTimeout(() => {
+    accountForm.value?.validate()
+    profileForm.value?.validate()
+  }, 0)
 }
 </script>
 

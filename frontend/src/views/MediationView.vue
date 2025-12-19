@@ -229,6 +229,7 @@
               dense
               class="mb-4"
               required
+              @paste="handlePaste($event, 'title')"
             ></v-text-field>
 
             <v-textarea
@@ -240,6 +241,7 @@
               rows="4"
               class="mb-4"
               required
+              @paste="handlePaste($event, 'description')"
             ></v-textarea>
 
             <v-select
@@ -369,13 +371,8 @@ const ticketValid = ref(false)
 const myTickets = ref<any[]>([])
 const allTickets = ref<any[]>([])
 const selectedTicket = ref<any>(null)
-const stats = ref({
-  totalTickets: 0,
-  openTickets: 0,
-  resolvedTickets: 0,
-  averageResolutionTime: 0,
-  issueTypeBreakdown: []
-})
+const stats = ref<any>({})
+// stats is already declared above
 
 const newTicket = ref({
   issueType: '',
@@ -519,6 +516,17 @@ const getPriorityColor = (priority: string) => {
 
 const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString()
+}
+
+const handlePaste = (event: ClipboardEvent, field: string) => {
+  // Ensure pasted content updates the v-model
+  const pastedText = event.clipboardData?.getData('text') || ''
+  newTicket.value[field as keyof typeof newTicket.value] = pastedText
+
+  // Force validation update
+  setTimeout(() => {
+    ticketForm.value?.validate()
+  }, 0)
 }
 
 onMounted(() => {

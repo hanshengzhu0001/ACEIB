@@ -270,13 +270,15 @@ router.put('/rooms/:roomId/messages/:messageId/read', async (req: Request, res: 
     }
 
     // Find and update message
-    const message = chat.messages.id(messageId);
-    if (!message) {
+    const messageIndex = chat.messages.findIndex(msg => msg._id.toString() === messageId);
+    if (messageIndex === -1) {
       return res.status(404).json({
         success: false,
         error: 'Message not found'
       });
     }
+
+    const message = chat.messages[messageIndex];
 
     if (!message.readBy.includes(userId as any)) {
       message.readBy.push(userId as any);
@@ -316,13 +318,15 @@ router.put('/rooms/:roomId/messages/:messageId', async (req: Request, res: Respo
       });
     }
 
-    const message = chat.messages.id(messageId);
-    if (!message) {
+    const messageIndex = chat.messages.findIndex(msg => msg._id.toString() === messageId);
+    if (messageIndex === -1) {
       return res.status(404).json({
         success: false,
         error: 'Message not found'
       });
     }
+
+    const message = chat.messages[messageIndex];
 
     // Only sender can edit
     if (message.sender.toString() !== userId) {
@@ -371,13 +375,15 @@ router.delete('/rooms/:roomId/messages/:messageId', async (req: Request, res: Re
       });
     }
 
-    const message = chat.messages.id(messageId);
-    if (!message) {
+    const messageIndex = chat.messages.findIndex((msg: any) => msg._id.toString() === messageId);
+    if (messageIndex === -1) {
       return res.status(404).json({
         success: false,
         error: 'Message not found'
       });
     }
+
+    const message = chat.messages[messageIndex];
 
     // Only sender can delete
     if (message.sender.toString() !== userId) {
@@ -387,7 +393,7 @@ router.delete('/rooms/:roomId/messages/:messageId', async (req: Request, res: Re
       });
     }
 
-    chat.messages.pull(messageId);
+    chat.messages.splice(messageIndex, 1);
     await chat.save();
 
     logger.info(`Message deleted from room ${roomId} by user ${userId}`);

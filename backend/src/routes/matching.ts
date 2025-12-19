@@ -63,14 +63,14 @@ router.post('/generate', async (req: Request, res: Response, next: NextFunction)
               location: mentor.profile.location,
               languages: mentor.profile.languages
             },
-            mentorProfile: {
-              expertise: mentor.mentorProfile.expertise,
-              teachingStyle: mentor.mentorProfile.teachingStyle,
-              experienceYears: mentor.mentorProfile.experienceYears,
-              maxStudents: mentor.mentorProfile.maxStudents,
-              certifications: mentor.mentorProfile.certifications,
-              hourlyRate: mentor.mentorProfile.hourlyRate
-            },
+          mentorProfile: mentor.mentorProfile ? {
+            expertise: mentor.mentorProfile.expertise,
+            teachingStyle: mentor.mentorProfile.teachingStyle,
+            experienceYears: mentor.mentorProfile.experienceYears,
+            maxStudents: mentor.mentorProfile.maxStudents,
+            certifications: mentor.mentorProfile.certifications,
+            hourlyRate: mentor.mentorProfile.hourlyRate
+          } : undefined,
             engagement: {
               averageRating: mentor.engagement.averageRating,
               totalSessions: mentor.engagement.totalSessions
@@ -267,24 +267,24 @@ function calculateCompatibilityScore(student: any, mentor: any) {
   // Subject match (0-100)
   const subjectMatch = calculateSubjectMatch(
     studentProfile.subjects || [],
-    mentorProfile.expertise || []
+    mentorProfile?.expertise || []
   );
 
   // Teaching style match (0-100)
-  const teachingStyleMatch = studentProfile.learningStyle === mentorProfile.teachingStyle ? 100 :
-    (studentProfile.learningStyle === 'visual' && mentorProfile.teachingStyle === 'interactive') ? 80 :
-    (studentProfile.learningStyle === 'auditory' && mentorProfile.teachingStyle === 'project-based') ? 80 : 60;
+  const teachingStyleMatch = studentProfile.learningStyle === mentorProfile?.teachingStyle ? 100 :
+    (studentProfile.learningStyle === 'visual' && mentorProfile?.teachingStyle === 'interactive') ? 80 :
+    (studentProfile.learningStyle === 'auditory' && mentorProfile?.teachingStyle === 'project-based') ? 80 : 60;
 
   // Availability match (0-100)
   const availabilityMatch = calculateAvailabilityMatch(
     studentProfile.availability || [],
-    mentorProfile.availability || []
+    mentorProfile?.availability || []
   );
 
   // Experience level match (0-100)
   const experienceMatch = calculateExperienceMatch(
     studentProfile.preferredMentorExperience,
-    mentorProfile.experienceYears
+    mentorProfile?.experienceYears || 0
   );
 
   // Weights (configurable)
@@ -309,7 +309,7 @@ function calculateCompatibilityScore(student: any, mentor: any) {
       subjectMatch,
       teachingStyleMatch,
       availabilityMatch,
-      experienceLevelMatch,
+      experienceMatch,
       weights
     }
   };

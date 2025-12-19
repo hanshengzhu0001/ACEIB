@@ -23,6 +23,7 @@
                 dense
                 class="mb-4"
                 required
+                @paste="handlePaste($event, 'email')"
               ></v-text-field>
 
               <v-text-field
@@ -35,6 +36,7 @@
                 dense
                 class="mb-2"
                 required
+                @paste="handlePaste($event, 'password')"
               ></v-text-field>
 
               <v-row class="mb-4">
@@ -70,7 +72,7 @@
         </v-card>
 
         <!-- Development Info (only in development) -->
-        <v-card v-if="import.meta.env.DEV" class="mt-6 pa-4" outlined>
+        <v-card v-if="false" class="mt-6 pa-4" outlined>
           <v-card-title class="text-h6 mb-2">Development Mode</v-card-title>
           <v-card-text class="pa-0">
             <div class="text-caption text--secondary mb-2">
@@ -109,8 +111,22 @@ const emailRules = [
 
 const passwordRules = [
   (v: string) => !!v || 'Password is required',
-  (v: string) => v.length >= 6 || 'Password must be at least 6 characters'
+  (v: string) => (v && v.length >= 6) || 'Password must be at least 6 characters'
 ]
+
+const handlePaste = (event: ClipboardEvent, field: string) => {
+  // Ensure pasted content updates the v-model
+  const pastedText = event.clipboardData?.getData('text') || ''
+  if (field === 'email') {
+    form.email = pastedText
+  } else if (field === 'password') {
+    form.password = pastedText
+  }
+  // Force validation update
+  setTimeout(() => {
+    form.value?.validate()
+  }, 0)
+}
 
 const handleLogin = async () => {
   if (!valid.value) return

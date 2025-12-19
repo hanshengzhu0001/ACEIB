@@ -1,0 +1,20 @@
+{"level":"info","message":"📦 Connected to MongoDB successfully","timestamp":"2025-12-19T04:59:04.682Z"}
+{"level":"info","message":"Seeding database with mock data...","timestamp":"2025-12-19T04:59:04.734Z"}
+{"level":"info","message":"📦 Connected to MongoDB successfully","timestamp":"2025-12-19T04:59:18.914Z"}
+{"level":"info","message":"Seeding database with mock data...","timestamp":"2025-12-19T04:59:18.962Z"}
+{"level":"info","message":"✅ Database seeded successfully with mock data","timestamp":"2025-12-19T04:59:21.096Z"}
+{"level":"info","message":"Created: 3 mentors, 3 students, 3 pairings, 2 chats, 2 mediation tickets","timestamp":"2025-12-19T04:59:21.096Z"}
+{"level":"info","message":"🚀 Server running on port 3001","timestamp":"2025-12-19T04:59:21.098Z"}
+{"level":"info","message":"📡 Socket.io server initialized","timestamp":"2025-12-19T04:59:21.098Z"}
+{"level":"info","message":"🌱 Mock data seeded successfully","timestamp":"2025-12-19T04:59:21.098Z"}
+{"level":"info","message":"📦 Connected to MongoDB successfully","timestamp":"2025-12-19T04:59:29.760Z"}
+{"level":"info","message":"Database already has data, skipping seed","timestamp":"2025-12-19T04:59:29.777Z"}
+{"level":"info","message":"🚀 Server running on port 3001","timestamp":"2025-12-19T04:59:29.778Z"}
+{"level":"info","message":"📡 Socket.io server initialized","timestamp":"2025-12-19T04:59:29.779Z"}
+{"level":"info","message":"🌱 Mock data seeded successfully","timestamp":"2025-12-19T04:59:29.779Z"}
+{"level":"info","message":"📦 Connected to MongoDB successfully","timestamp":"2025-12-19T04:59:46.425Z"}
+{"level":"info","message":"Database already has data, skipping seed","timestamp":"2025-12-19T04:59:46.449Z"}
+{"level":"info","message":"🚀 Server running on port 3001","timestamp":"2025-12-19T04:59:46.450Z"}
+{"level":"info","message":"📡 Socket.io server initialized","timestamp":"2025-12-19T04:59:46.450Z"}
+{"level":"info","message":"🌱 Mock data seeded successfully","timestamp":"2025-12-19T04:59:46.450Z"}
+{"level":"info","message":"User logged in: student.demo1@aceib-platform.demo","timestamp":"2025-12-19T05:03:08.713Z"}

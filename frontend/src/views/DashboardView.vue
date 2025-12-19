@@ -302,9 +302,9 @@ const stats = ref({
 })
 
 const unreadCount = ref(0)
-const recentActivities = ref([])
-const upcomingSessions = ref([])
-const currentGoals = ref([])
+const recentActivities = ref<any[]>([])
+const upcomingSessions = ref<any[]>([])
+const currentGoals = ref<any[]>([])
 
 // Fetch dashboard data
 const fetchDashboardData = async () => {

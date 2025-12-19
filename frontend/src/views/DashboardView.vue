@@ -333,24 +333,167 @@ const fetchDashboardData = async () => {
     ]
 
     // Mock weekly sessions (would come from API)
+    const today = new Date()
+    const monday = new Date(today)
+    monday.setDate(today.getDate() - today.getDay() + 1) // Get Monday of current week
+
     weeklySessions.value = [
+      // Monday
       {
         id: '1',
-        title: 'Math Tutoring - Calculus',
+        title: 'Advanced Calculus Tutoring',
         type: 'mentoring',
-        date: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Tomorrow
-        time: '15:00',
+        date: monday.toISOString().split('T')[0],
+        time: '09:00',
         duration: 60,
-        participants: ['Sarah Johnson']
+        participants: ['Prof. Martinez'],
+        notes: 'Focus on derivatives and integrals'
       },
       {
         id: '2',
-        title: 'Chemistry Study Session',
-        type: 'study',
-        date: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Friday
+        title: 'Physics Lab Review',
+        type: 'review',
+        date: monday.toISOString().split('T')[0],
         time: '14:00',
+        duration: 45,
+        participants: ['Dr. Chen'],
+        notes: 'Preparing for upcoming lab exam'
+      },
+      {
+        id: '3',
+        title: 'Biology Study Group',
+        type: 'study',
+        date: monday.toISOString().split('T')[0],
+        time: '16:30',
         duration: 90,
+        participants: ['Lisa Wong', 'Mike Chen', 'Anna Kim']
+      },
+
+      // Tuesday
+      {
+        id: '4',
+        title: 'Organic Chemistry Office Hours',
+        type: 'office-hours',
+        date: new Date(monday.getTime() + 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        time: '10:00',
+        duration: 60,
+        participants: ['Dr. Thompson']
+      },
+      {
+        id: '5',
+        title: 'Statistics Homework Help',
+        type: 'mentoring',
+        date: new Date(monday.getTime() + 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        time: '15:00',
+        duration: 75,
+        participants: ['Rachel Green'],
+        notes: 'Regression analysis and probability'
+      },
+
+      // Wednesday
+      {
+        id: '6',
+        title: 'Computer Science Algorithms',
+        type: 'mentoring',
+        date: new Date(monday.getTime() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        time: '08:30',
+        duration: 90,
+        participants: ['Alex Rodriguez'],
+        notes: 'Dynamic programming and graph theory'
+      },
+      {
+        id: '7',
+        title: 'English Literature Discussion',
+        type: 'study',
+        date: new Date(monday.getTime() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        time: '13:00',
+        duration: 60,
+        participants: ['Sarah Johnson', 'Tom Wilson']
+      },
+      {
+        id: '8',
+        title: 'Psychology Research Methods',
+        type: 'review',
+        date: new Date(monday.getTime() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        time: '17:00',
+        duration: 45,
+        participants: ['Dr. Park']
+      },
+
+      // Thursday
+      {
+        id: '9',
+        title: 'Spanish Conversation Practice',
+        type: 'mentoring',
+        date: new Date(monday.getTime() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        time: '11:00',
+        duration: 50,
+        participants: ['Maria Sanchez'],
+        notes: 'Focus on business vocabulary'
+      },
+      {
+        id: '10',
+        title: 'Economics Seminar Prep',
+        type: 'study',
+        date: new Date(monday.getTime() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        time: '14:30',
+        duration: 120,
+        participants: ['James Brown', 'Emma Davis', 'Prof. Lee'],
+        notes: 'Group preparation for macroeconomic presentation'
+      },
+
+      // Friday
+      {
+        id: '11',
+        title: 'Chemistry Lab Safety Review',
+        type: 'office-hours',
+        date: new Date(monday.getTime() + 4 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        time: '09:30',
+        duration: 30,
         participants: ['Dr. Garcia']
+      },
+      {
+        id: '12',
+        title: 'History Essay Workshop',
+        type: 'mentoring',
+        date: new Date(monday.getTime() + 4 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        time: '13:00',
+        duration: 90,
+        participants: ['Prof. Johnson'],
+        notes: 'Thesis development and source analysis'
+      },
+      {
+        id: '13',
+        title: 'Art History Portfolio Review',
+        type: 'review',
+        date: new Date(monday.getTime() + 4 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        time: '15:30',
+        duration: 60,
+        participants: ['Dr. Kim']
+      },
+
+      // Saturday
+      {
+        id: '14',
+        title: 'Weekend Math Intensive',
+        type: 'study',
+        date: new Date(monday.getTime() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        time: '10:00',
+        duration: 180,
+        participants: ['David Lee', 'Sophie Martin', 'Prof. Martinez'],
+        notes: 'Full day intensive calculus bootcamp'
+      },
+
+      // Sunday
+      {
+        id: '15',
+        title: 'Music Theory Fundamentals',
+        type: 'mentoring',
+        date: new Date(monday.getTime() + 6 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        time: '14:00',
+        duration: 75,
+        participants: ['Mr. Davis'],
+        notes: 'Harmony, melody, and rhythm basics'
       }
     ]
 

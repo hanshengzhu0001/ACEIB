@@ -1,59 +1,24 @@
-# Demo Images Repository
+# ACEIB Demo Images Repository
 
-This folder serves as a repository for organizing demo images before they are moved to the appropriate locations in the application.
+This folder contains demo images for the ACEIB Educational Platform.
 
-## Current Status
+## Current Images
 
-**4 demo images added to public/images/demo/** (demo 1.png - demo 4.png)
+| Demo 1 | Demo 2 |
+|--------|--------|
+| ![Demo 1](https://raw.githubusercontent.com/hanshengzhu0001/ACEIB/main/public/images/demo/demo%201.png) | ![Demo 2](https://raw.githubusercontent.com/hanshengzhu0001/ACEIB/main/public/images/demo/demo%202.png) |
 
-## Folder Structure
+| Demo 3 | Demo 4 |
+|--------|--------|
+| ![Demo 3](https://raw.githubusercontent.com/hanshengzhu0001/ACEIB/main/public/images/demo/demo%203.png) | ![Demo 4](https://raw.githubusercontent.com/hanshengzhu0001/ACEIB/main/public/images/demo/demo%204.png) |
 
-```
-images/demo/
-├── mentors/          # Mentor profile images and assets
-├── students/         # Student profile images and assets
-├── sessions/         # Session photos and tutorial materials
-├── subjects/         # Subject-specific illustrations and diagrams
-├── ui/              # UI screenshots, mockups, and wireframes
-├── features/        # Feature demonstration images
-├── marketing/       # Marketing materials and promotional images
-└── temp/           # Temporary images pending review/organization
-```
+## File Details
 
-## Workflow
+- **demo 1.png**: 300KB
+- **demo 2.png**: 360KB
+- **demo 3.png**: 445KB
+- **demo 4.png**: 273KB
 
-1. **Upload to `images/demo/`**: Place new images here first
-2. **Organize by category**: Move to appropriate subfolders
-3. **Optimize for web**: Compress and resize as needed
-4. **Move to public**: Copy optimized versions to `public/images/demo/`
-5. **Update references**: Update any code references to use the new images
+## Usage
 
-## Image Optimization
-
-Before moving images to `public/images/demo/`, optimize them for web use:
-
-- **Resize**: Reduce dimensions while maintaining quality
-- **Compress**: Use tools like ImageOptim, TinyPNG, or WebP conversion
-- **Format**: Convert to WebP for modern browsers, fall back to JPEG/PNG
-
-## Usage in Code
-
-Images in `public/images/demo/` can be referenced in components:
-
-```vue
-<template>
-  <img src="/images/demo/mentors/dr-smith.jpg" alt="Dr. Smith" />
-</template>
-```
-
-## File Naming
-
-- Use kebab-case: `math-tutoring-session.jpg`
-- Include context: `mentor-profile-card.jpg`
-- Avoid special characters: `chemistry-lab-equipment.png`
-
-## Maintenance
-
-- Regularly review and remove unused images
-- Update this README when adding new categories
-- Keep both folders in sync for development
+Images are accessible via GitHub at the URLs shown above, or in the web application at `/images/demo/filename.png`.

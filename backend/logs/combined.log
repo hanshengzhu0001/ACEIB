@@ -34,3 +34,8 @@
 {"level":"info","message":"🚀 Server running on port 3001","timestamp":"2025-12-19T05:28:46.169Z"}
 {"level":"info","message":"📡 Socket.io server initialized","timestamp":"2025-12-19T05:28:46.170Z"}
 {"level":"info","message":"🌱 Mock data seeded successfully","timestamp":"2025-12-19T05:28:46.170Z"}
+{"level":"info","message":"📦 Connected to MongoDB successfully","timestamp":"2025-12-19T05:29:00.372Z"}
+{"level":"info","message":"Database already has data, skipping seed","timestamp":"2025-12-19T05:29:00.405Z"}
+{"level":"info","message":"🚀 Server running on port 3001","timestamp":"2025-12-19T05:29:00.406Z"}
+{"level":"info","message":"📡 Socket.io server initialized","timestamp":"2025-12-19T05:29:00.406Z"}
+{"level":"info","message":"🌱 Mock data seeded successfully","timestamp":"2025-12-19T05:29:00.406Z"}

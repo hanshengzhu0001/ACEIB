@@ -255,6 +255,13 @@
         </div>
       </v-col>
     </v-row>
+
+    <!-- Matching Loader Overlay -->
+    <MatchingLoader
+      :visible="showMatchingLoader"
+      :duration="4000"
+      @complete="showMatchingLoader = false"
+    />
   </v-container>
 </template>
 
@@ -262,6 +269,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+import MatchingLoader from '@/components/matching/MatchingLoader.vue'
 
 const router = useRouter()
 
@@ -276,6 +284,7 @@ const hasSearched = ref(false)
 const requestingPairing = ref<string | null>(null)
 const matches = ref<Match[]>([])
 const hasActivePairing = ref(false)
+const showMatchingLoader = ref(false)
 
 // Check if user has active pairing
 const checkActivePairing = async () => {
@@ -291,6 +300,8 @@ const checkActivePairing = async () => {
 // Run matching algorithm
 const runMatching = async () => {
   loading.value = true
+  showMatchingLoader.value = true
+
   try {
     const response = await axios.post('/matching/generate')
     matches.value = response.data.data.matches
@@ -300,6 +311,10 @@ const runMatching = async () => {
     // Handle error (show snackbar, etc.)
   } finally {
     loading.value = false
+    // Keep loader visible for a moment to show completion
+    setTimeout(() => {
+      showMatchingLoader.value = false
+    }, 1000)
   }
 }
 

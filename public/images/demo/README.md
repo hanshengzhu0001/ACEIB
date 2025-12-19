@@ -22,7 +22,15 @@ Images placed in this folder can be accessed via the web application at:
 - GIF (.gif)
 - WebP (.webp)
 
-## Recommended Image Types
+## Current Demo Images
+
+### Available Images:
+- **demo 1.png** (300KB): [Description needed - please update]
+- **demo 2.png** (360KB): [Description needed - please update]
+- **demo 3.png** (445KB): [Description needed - please update]
+- **demo 4.png** (273KB): [Description needed - please update]
+
+### Recommended Image Types
 
 - **Screenshots**: UI mockups, feature demonstrations
 - **Profile Pictures**: Sample mentor/student avatars
@@ -35,6 +43,42 @@ Images placed in this folder can be accessed via the web application at:
 - Web images: Keep under 500KB per image
 - Thumbnails: Optimize to under 100KB
 - Icons: Keep under 50KB
+
+## Usage Examples
+
+Images in `public/images/demo/` can be referenced in Vue components:
+
+```vue
+<template>
+  <!-- Basic image usage -->
+  <img src="/images/demo/demo 1.png" alt="Demo Image 1" />
+
+  <!-- In Vuetify components -->
+  <v-card>
+    <v-img src="/images/demo/demo 2.png" height="200px"></v-img>
+    <v-card-text>Demo Image 2</v-card-text>
+  </v-card>
+
+  <!-- As background images -->
+  <div
+    class="hero-section"
+    :style="{ backgroundImage: 'url(/images/demo/demo 3.png)' }"
+  ></div>
+
+  <!-- In avatar components -->
+  <v-avatar size="64">
+    <img src="/images/demo/demo 4.png" alt="Demo Avatar" />
+  </v-avatar>
+</template>
+
+<style scoped>
+.hero-section {
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+}
+</style>
+```
 
 ## Organization
 

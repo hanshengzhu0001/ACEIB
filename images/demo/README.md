@@ -2,6 +2,10 @@
 
 This folder serves as a repository for organizing demo images before they are moved to the appropriate locations in the application.
 
+## Current Status
+
+**4 demo images added to public/images/demo/** (demo 1.png - demo 4.png)
+
 ## Folder Structure
 
 ```

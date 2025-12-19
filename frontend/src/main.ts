@@ -9,7 +9,7 @@ import vuetify from './plugins/vuetify'
 import './styles/main.scss'
 
 // Configure axios
-// Let Vite proxy handle API routing - don't set baseURL to avoid conflicts
+axios.defaults.baseURL = '/api'  // Vite proxy will handle this
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 
 // Add axios interceptor for auth
